@@ -1,0 +1,116 @@
+@media (min-width: 600px) {
+
+    /* Re-used Styles */
+    .squared-img-wrapper {
+        width: 300px;
+        height: 300px;
+    }
+
+    .responsive-mt {
+        margin-top: 5rem;
+    }
+
+    /* Custom Styles */
+    nav {
+        padding: 1rem 10%;
+    }
+
+    .ham-menu {
+        justify-content: space-around;
+    }
+
+    .ham-menu-link {
+        font-size: 1rem;
+    }
+
+    .hero-image {
+        width: 120%;
+    }
+
+    .hero-title {
+        font-size: 4rem;
+        bottom: 0;
+    }
+
+    .hero-title2 {
+        bottom: -3rem;
+    }
+
+    .specials-card {
+        height: 220px;
+    }
+
+    .comment-card {
+        gap: 1rem;
+    }
+
+    .comment-txt {
+        margin-block: 12px;
+    }
+
+    .rounded-btn {
+        width: 40px;
+        height: 40px;
+    }
+
+    .arrow {
+        width: 20px;
+        height: 20px;
+    }
+
+    .big-title {
+        font-size: 5rem;
+    }
+
+    .footer-container {
+        display: flex;
+        justify-content: space-between;
+        padding: 1rem 3rem;
+    }
+
+    .cta-section-bg {
+        height: 48vh;
+    }
+
+    .cta-container h2 {
+        font-size: 2.2rem;
+    }
+
+    .cta-input {
+        padding: 1rem;
+        width: 80%;
+    }
+
+    .bigger-squared-img {
+        width: 400px;
+        height: 400px;
+    }
+
+    .big-icon {
+        font-size: 2.5rem;
+    }
+
+    #form {
+        padding: 10% 15%;
+    }
+
+    .pricing-card {
+        width: 60%;
+    }
+
+    .auth-card {
+        width: 80%;
+    }
+
+    .big-title-wrapper.nutrition .big-title {
+        font-size: 3.6rem;
+    }
+
+    strong.max-two-lines {
+        max-width: 200px;
+    }
+
+    .nut-form-wrapper {
+        min-width: 60%;
+    }
+}
