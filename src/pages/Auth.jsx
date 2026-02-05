@@ -1,8 +1,7 @@
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import hackGuy from "../assets/hack-squad-guy.jpg";
 import Error from "../components/Error";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 function Auth() {
   const { method } = useParams();
@@ -30,12 +29,27 @@ function Auth() {
       return;
     }
 
+    if (password !== confirm && method === "register") {
+      setError("Passwords must match!");
+      return;
+    }
+    
     setError("");
-    navigate("/");
     setUsername("");
     setPassword("");
     setConfirm("");
+
+    navigate("/");
   }
+
+  const resetAll = () => {
+    navigate(method === "register" ? "/auth/login" : "/auth/register");
+
+    setError("");
+    setUsername("");
+    setPassword("");
+    setConfirm("");
+  };
 
   return (
     <>
@@ -65,33 +79,31 @@ function Auth() {
             onSubmit={handleSubmit}
             className="auth-form one-rem-mt vertical-center w-full "
           >
-            <div className="w-full toCenter">
-              <div className="auth-input-wrapper">
-                <input
-                  name="first name"
-                  type="text"
-                  className="auth-input w-full"
-                  placeholder=""
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-                <label htmlFor="username">First name</label>
+            {method === "register" ? (
+              <div className="w-full toCenter">
+                <div className="auth-input-wrapper">
+                  <input
+                    name="first name"
+                    type="text"
+                    className="auth-input w-full"
+                    placeholder=""
+                  />
+                  <label htmlFor="username">First name</label>
+                </div>
+                <div className="auth-input-wrapper">
+                  <input
+                    name="last name"
+                    type="text"
+                    className="auth-input w-full"
+                    placeholder=""
+                  />
+                  <label htmlFor="username">Last name</label>
+                </div>
               </div>
-              <div className="auth-input-wrapper">
-                <input
-                  name="last name"
-                  type="text"
-                  className="auth-input w-full"
-                  placeholder=""
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-                <label htmlFor="username">Last name</label>
-              </div>
-            </div>
+            ) : null}
             <div className="auth-input-wrapper">
               <input
-                name="eamil"
+                name="email"
                 type="email"
                 className="auth-input w-full"
                 placeholder=""
@@ -100,30 +112,28 @@ function Auth() {
               />
               <label htmlFor="username">Email adress</label>
             </div>
-            <div className="w-full toCenter">
-              <div className="auth-input-wrapper">
-                <input
-                  name="first name"
-                  type="date"
-                  className="auth-input w-full"
-                  placeholder=""
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-                <label htmlFor="username">birthday</label>
+            {method === "register" ? (
+              <div className="w-full toCenter">
+                <div className="auth-input-wrapper">
+                  <input
+                    name="first name"
+                    type="date"
+                    className="auth-input w-full"
+                    placeholder=""
+                  />
+                  <label htmlFor="username">birthday</label>
+                </div>
+                <div style={{ maxWidth: "30%" }} className="auth-input-wrapper">
+                  <input
+                    name="last name"
+                    type="text"
+                    className="auth-input w-full"
+                    placeholder=""
+                  />
+                  <label htmlFor="username">Country</label>
+                </div>
               </div>
-              <div style={{maxWidth: '30%'}} className="auth-input-wrapper">
-                <input
-                  name="last name"
-                  type="text"
-                  className="auth-input w-full"
-                  placeholder=""
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-                <label htmlFor="username">Country</label>
-              </div>
-            </div>
+            ) : null}
             <div className="auth-input-wrapper">
               <input
                 name="password"
@@ -151,8 +161,12 @@ function Auth() {
             ) : null}
 
             <div className="w-full flex-between one-rem-mt">
-              <button type="submit" className="primary-btn ">
-                {method === "login" ? "login" : "register"}
+              <button
+                type="submit"
+                className="primary-btn"
+                onClick={handleSubmit}
+              >
+                {method === "login" ? "Log In" : "Register"}
               </button>
               <a href="" className="underlined small-text no-margin gray-txt">
                 Forget Your Password?
@@ -165,34 +179,16 @@ function Auth() {
           {method === "login" ? (
             <p className="one-rem-mt ">
               You don't have an account yet?{" "}
-              <Link
-                onClick={() => {
-                  setError("");
-                  setUsername("");
-                  setPassword("");
-                  setConfirm("");
-                }}
-                className="yellow-text underlined"
-                to="/auth/register"
-              >
+              <span onClick={resetAll} className="yellow-text underlined">
                 Register
-              </Link>
+              </span>
             </p>
           ) : (
             <p className="one-rem-mt ">
               You already have an account?{" "}
-              <Link
-                onClick={() => {
-                  setError("");
-                  setUsername("");
-                  setPassword("");
-                  setConfirm("");
-                }}
-                className="yellow-text underlined"
-                to="/auth/login"
-              >
+              <span onClick={resetAll} className="yellow-text underlined">
                 Log in
-              </Link>
+              </span>
             </p>
           )}
         </div>

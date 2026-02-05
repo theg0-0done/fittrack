@@ -3,7 +3,7 @@
 /* icon */
 :root {
     --background-color: hsl(218, 31%, 5%);
-    --yellow: hsl(50, 100%, 50%);
+    --yellow: #ffd500;
     --light-gray: #757B81;
     --dark-gray: #252a31;
     --off-white: #F0F0F0;
@@ -245,6 +245,20 @@ ul {
     text-align: center;
 }
 
+.highlight-txt {
+    position: relative;
+    text-transform: capitalize;
+    font-weight: 400;
+}
+
+.highlight-txt::after {
+    content: '';
+    position: absolute;
+    inset: -2px;
+    background-color: hsl(50, 100%, 20%);
+    z-index: -4;
+}
+
 .secondary-txt {
     color: var(--light-gray);
 }
@@ -259,6 +273,8 @@ input {
     right: 0;
     left: 0;
     bottom: 0;
+    width: 100%;
+    height: 100%;
     z-index: -1;
 }
 
@@ -699,23 +715,37 @@ section {
 }
 
 
-/* page: exercises styles */
-#form {
+/* page: tdee styles highlight-txt */
+.tdee-section {
     width: 100%;
     padding: 10%;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 4rem;
+}
+
+.tdee-section .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
 }
 
 .tdee-form-wrapper {
     width: 100%;
-    background-color: var(--background-color);
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px var(--yellow) solid;
+    padding: 0 2.2rem 2.2rem;
+    gap: 2rem;
 }
 
 .tdee-form {
     gap: 2rem;
-    padding: 2.2rem;
     background-color: transparent;
     width: 100%;
-    backdrop-filter: blur(5px);
 }
 
 .active-spin-animation {
@@ -737,7 +767,7 @@ section {
 }
 
 .tdee-input {
-    background-color: hsl(218, 31%, 7%);
+    background-color: rgba(0, 0, 0, 0.4);
     color: var(--off-white);
     outline: none;
     border: none;
@@ -867,7 +897,6 @@ section {
 .nut-form-wrapper {
     border: 1px var(--yellow) solid;
     min-height: 200px;
-    min-width: 100%;
     padding: 2rem 1rem;
     backdrop-filter: blur(10px);
     background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
@@ -954,12 +983,13 @@ strong.max-two-lines {
     padding: 1rem 8px;
     margin-block: 1rem;
     border: 1px hsl(0, 100%, 60%) solid;
-    background-color: hsl(0, 100%, 10%);
+    background-color: rgb(51, 0, 0, 0.6);
     color: hsl(0, 100%, 60%);
     font-weight: bold;
     display: flex;
     align-items: center;
     gap: 8px;
+    animation: slideDown 0.6s ease-out;
 }
 
 .loading-circle {
@@ -978,4 +1008,11 @@ strong.max-two-lines {
     inset: -4px;
     background-image: conic-gradient(from var(--angle), transparent, var(--yellow));
     animation: 1.5s spin linear infinite;
+}
+
+.nut-form-wrapper.results {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
 }

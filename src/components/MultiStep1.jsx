@@ -1,32 +1,11 @@
-import { useState } from "react";
-import Error from "./Error";
+import { useContext } from "react";
+import { FormContext } from "../pages/Tdee";
 
-function MultiStep1({ onNext }) {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [error, setError] = useState("");
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    if (!username.trim()) {
-      setError("Please enter your username!");
-      return;
-    }
-
-    if (!email.trim()) {
-      setError("Please enter your email adress!");
-      return;
-    }
-
-    onNext();
-    setEmail("");
-    setUsername("");
-    setError("");
-  }
+function MultiStep1() {
+  const {username, setUsername, email, setEmail} = useContext(FormContext)   
 
   return (
-    <form className="tdee-form relative vertical-left oneRem-gap darkGray-bg one-rem-padding">
+    <form className="tdee-form relative vertical-left oneRem-gap darkGray-bg">
       <div className="txt-to-left">
         <h3 className="no-margin">Tell us who you are</h3>
         <p className="no-margin small-text gray-txt">
@@ -47,13 +26,6 @@ function MultiStep1({ onNext }) {
         value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
-      <div className="w-full flex-end">
-        <button onClick={handleSubmit} type="submit" className="primary-btn ">
-          Submit
-        </button>
-      </div>
-
-      {error ? <Error message={error} /> : null}
     </form>
   );
 }

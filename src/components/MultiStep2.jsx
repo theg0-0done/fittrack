@@ -1,36 +1,17 @@
-import { useState } from "react";
-import Error from "./Error";
+import { useContext } from "react";
+import { FormContext } from "../pages/Tdee";
 
-function MultiStep1({ onNext }) {
-  const [age, setAge] = useState("");
-  const [height, setHeight] = useState("");
-  const [weight, setWeight] = useState("");
-  const [error, setError] = useState("");
-
-  function handleSubmit(e) {
-    e.preventDefault();
-
-    if (!age.trim()) {
-      setError("Please enter your age!");
-      return;
-    }
-
-    if (!height.trim()) {
-      setError("Please enter your height adress!");
-      return;
-    }
-
-    if (!weight.trim()) {
-      setError("Please enter your weight adress!");
-      return;
-    }
-
-    onNext();
-    setHeight("");
-    setWeight("");
-    setAge("");
-    setError("");
-  }
+function MultiStep2({ onNext }) {
+  const {
+    gender,
+    setGender,
+    age,
+    setAge,
+    height,
+    setHeight,
+    weight,
+    setWeight,
+  } = useContext(FormContext);
 
   return (
     <form className="tdee-form relative vertical-left oneRem-gap darkGray-bg one-rem-padding">
@@ -48,11 +29,23 @@ function MultiStep1({ onNext }) {
         <div className="toCenter">
           <label>
             Male
-            <input type="radio" value="male" />
+            <input
+              type="radio"
+              name="gender"
+              value="male"
+              checked={gender === "male"}
+              onChange={() => setGender("male")}
+            />
           </label>
           <label>
             Female
-            <input type="radio" value="female" />
+            <input
+              type="radio"
+              name="gender"
+              value="female"
+              checked={gender === "female"}
+              onChange={() => setGender("female")}
+            />
           </label>
         </div>
       </div>
@@ -88,16 +81,8 @@ function MultiStep1({ onNext }) {
           />
         </label>
       </div>
-
-      <div className="w-full flex-end">
-        <button onClick={handleSubmit} type="submit" className="primary-btn ">
-          Submit
-        </button>
-      </div>
-
-      {error ? <Error message={error} /> : null}
     </form>
   );
 }
 
-export default MultiStep1;
+export default MultiStep2;

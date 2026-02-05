@@ -5,16 +5,30 @@ import inclineGuy from "../assets/inclinePressGuy.jpg";
 import gymGirl from "../assets/gym-girl2.jpg";
 import cableGuy from "../assets/cablesGuy.jpg";
 import hackGuy from "../assets/hack-squad-guy.jpg";
+import girl from "../assets/standingGild.jpg";
 
 import MultiStep1 from "../components/MultiStep1";
 import MultiStep2 from "../components/MultiStep2";
 import MultiStep3 from "../components/MultiStep3";
 import Results from "../components/Results";
+import Error from "../components/Error";
 
-import { useState } from "react";
+import { useState, createContext } from "react";
+
+export const FormContext = createContext();
 
 function NutritionCalculator() {
   const [current, setCurrent] = useState(0);
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [gender, setGender] = useState("");
+  const [age, setAge] = useState("");
+  const [height, setHeight] = useState("");
+  const [weight, setWeight] = useState("");
+  const [intensity, setIntensity] = useState("");
+  const [goal, setGoal] = useState("");
+  const [error, setError] = useState("");
+  const [result, setResult] = useState({});
   const steps = [
     {
       id: 1,
@@ -29,8 +43,102 @@ function NutritionCalculator() {
       form: <MultiStep3 onNext={() => setCurrent((prev) => prev + 1)} />,
     },
   ];
+
   const stepProgress =
     current < steps.length && (current * 100) / (steps.length - 1);
+
+  function clearEverything() {
+    setUsername("");
+    setEmail("");
+    setGender("");
+    setHeight("");
+    setAge("");
+    setWeight("");
+    setIntensity("");
+    setGoal("");
+    setCurrent(0);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    if (current === 0) {
+      if (!username.trim()) {
+        setError("Please enter your username!");
+        return;
+      } else if (!email.trim()) {
+        setError("Please enter your email address!");
+        return;
+      }
+    }
+
+    if (current === 1) {
+      if (!gender.trim()) {
+        setError("Please enter a gender!");
+        return;
+      } else if (!age.trim()) {
+        setError("Please enter your age!");
+        return;
+      } else if (!height.trim()) {
+        setError("Please enter your height!");
+        return;
+      } else if (!weight.trim()) {
+        setError("Please enter your weight!");
+        return;
+      }
+    }
+
+    setError("");
+    setCurrent((prev) => prev + 1);
+  }
+
+  function bodyNutrition() {
+    if (!intensity.trim()) {
+      setError("Please set the intensity!");
+      return;
+    } else if (!goal.trim()) {
+      setError("Please set your goal!");
+      return;
+    }
+    setError("");
+
+    const intensityFactors = {
+      light: 1.375,
+      moderate: 1.55,
+      hard: 1.725,
+    };
+
+    const goalFactors = {
+      maintain: { caloriesF: 0, proteinF: 1.6 },
+      gain: { caloriesF: 500, proteinF: 2.2 },
+      lose: { caloriesF: -500, proteinF: 2.4 },
+    };
+
+    const BMR =
+      10 * weight + 6.25 * height - 5 * age + (gender === "male" ? 5 : -161);
+
+    const tdee = BMR * intensityFactors[intensity];
+
+    const goalCalories = tdee + goalFactors[goal].caloriesF;
+
+    const protein = weight * goalFactors[goal].proteinF;
+    const proteinCalories = protein * 4;
+
+    const fat = weight * 0.8;
+    const fatCalories = fat * 9;
+
+    const carbs = (goalCalories - proteinCalories - fatCalories) / 4;
+
+    setResult({
+      tdee: Number(tdee.toFixed(0)),
+      goalCalories: Number(goalCalories.toFixed(0)),
+      proteins: Number(protein.toFixed(1)),
+      fat: Number(fat.toFixed(1)),
+      carbs: Number(carbs.toFixed(1)),
+    });
+
+    setCurrent((prev) => prev + 1);
+  }
 
   return (
     <>
@@ -92,7 +200,7 @@ function NutritionCalculator() {
         </div>
       </section>
 
-      <section className="container vertical-center oneRem-gap  ">
+      <section className="container vertical-center oneRem-gap">
         <p className="no-margin small-text ">Benefits</p>
         <h2 className="no-margin">What You Get</h2>
         <p className="no-margin">Everything needed to fuek you goal</p>
@@ -149,32 +257,91 @@ function NutritionCalculator() {
         </div>
       </section>
 
-      <section id="form" className="darkGray-bg">
-        <div className="vertical-center container no-margin no-padding">
-          <h2 className="no-margin one-rem-mb">
-            CALORIES ARE DATA,
-            <br />
-            NOT GUILT.
-          </h2>
-          <div className="relative tdee-form-wrapper vertical-center ">
-            <div className="progress-wrapper">
-              <div
-                style={{ width: `${stepProgress}%` }}
-                className="progress-bar"
-              />
-              <div className="progress-steps flex-between ">
-                {steps.map((s) => (
-                  <p
-                    onClick={() => current >= s.id && setCurrent(s.id - 1)}
-                    className={`no-margin step ${s.id - 1 <= current && "active"}`}
-                  >
-                    {s.id}
-                  </p>
-                ))}
-              </div>
-            </div>
-            {current < steps.length ? steps[current].form : <Results />}
+      <section id="form" className="tdee-section">
+        <h2 className="no-margin one-rem-mb ">
+          CALORIES ARE DATA,
+          <br />
+          NOT GUILT.
+        </h2>
+        <div className="tdee-section-content overflow-hidden">
+          <div className="background w-full dark-it">
+            <img className="w-full squared-img dark-it" src={girl} alt="" />
           </div>
+          <div className="relative tdee-form-wrapper vertical-center">
+            {current < steps.length ? (
+              <div className="progress-wrapper">
+                <div
+                  style={{ width: `${stepProgress}%` }}
+                  className="progress-bar"
+                />
+                <div className="progress-steps flex-between ">
+                  {steps.map((s) => (
+                    <p
+                      key={s.id}
+                      onClick={() => current >= s.id && setCurrent(s.id - 1)}
+                      className={`no-margin step ${s.id - 1 <= current && "active"}`}
+                    >
+                      {s.id}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            ) : null}
+            <FormContext.Provider
+              value={{
+                username,
+                setUsername,
+                email,
+                setEmail,
+                gender,
+                setGender,
+                age,
+                setAge,
+                height,
+                setHeight,
+                weight,
+                setWeight,
+                intensity,
+                setIntensity,
+                goal,
+                setGoal,
+              }}
+            >
+              {current < steps.length ? (
+                steps[current].form
+              ) : (
+                <Results content={result} />
+              )}
+              {current < steps.length - 1 ? (
+                <div className="w-full flex-end">
+                  <button
+                    type="submit"
+                    className="primary-btn"
+                    onClick={handleSubmit}
+                  >
+                    Next
+                  </button>
+                </div>
+              ) : current === steps.length - 1 ? (
+                <div className="w-full flex-end">
+                  <button
+                    type="submit"
+                    className="primary-btn"
+                    onClick={bodyNutrition}
+                  >
+                    Calculate
+                  </button>
+                </div>
+              ) : (
+                <button className="secondary-btn" onClick={clearEverything}>
+                  Do it again
+                </button>
+              )}
+            </FormContext.Provider>
+            {error ? <Error key={error} message={error} /> : null}
+          </div>
+          {/* <div className="form-container vertical-center container no-margin no-padding">
+          </div> */}
         </div>
       </section>
 

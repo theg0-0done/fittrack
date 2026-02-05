@@ -9,8 +9,8 @@ import { TbListDetails } from "react-icons/tb";
 import { IoSaveOutline } from "react-icons/io5";
 
 import IHPcard from "../components/IHPcard";
-import MealNutrition from "../components/MealNutrition";
 import Error from "../components/Error";
+import { API_KEY, NUTRIENT_MAP } from "../data/nutritionData";
 
 import { useState, useEffect } from "react";
 import { FaCheck, FaTrash } from "react-icons/fa";
@@ -18,28 +18,15 @@ import { IoIosArrowForward } from "react-icons/io";
 
 function Tdee() {
   const [result, setResult] = useState(false);
-  const [ingreId, setIngreId] = useState("");
-  const [value, setValue] = useState("");
+  const [food, setFood] = useState("");
   const [quantity, setQuantity] = useState();
   const [ingredients, setIngredients] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [similars, setSimilars] = useState([]);
   const [loading, setLoading] = useState(false);
   const [chosen, setChosen] = useState(false);
-  const [test, setTest] = useState({});
-
-  const API_KEY = "UwXEj2R8rZys4H2H8JB8HQ9NbUVG4QIpGvVl6aEZ";
-
-  const NUTRIENT_MAP = {
-    "Energy": "calories",
-    "Protein": "protein",
-    "Total lipid (fat)": "fat",
-    "Fatty acids, total saturated": "satFat",
-    "Carbohydrate, by difference": "carbs",
-    "Sugars, total including NLEA": "sugar",
-    "Fiber, total dietary": "fiber",
-    "Sodium, Na": "sodium",
-  };
+  const [select, setSelect] = useState({});
+  const [mealTotals, setMealTotals] = useState({});
 
   useEffect(() => {
     const fetchFoodSimilars = async () => {
@@ -51,7 +38,7 @@ function Tdee() {
 
       try {
         const response = await fetch(
-          `https://api.nal.usda.gov/fdc/v1/foods/search?query=${value}&api_key=${API_KEY}`,
+          `https://api.nal.usda.gov/fdc/v1/foods/search?query=${food}&api_key=${API_KEY}`,
         );
 
         if (!response.ok) {
@@ -60,7 +47,7 @@ function Tdee() {
 
         const data = await response.json();
 
-        if (value) setSimilars(data.foods);
+        if (food) setSimilars(data.foods);
       } catch (err) {
         console.error(err);
       } finally {
@@ -69,10 +56,10 @@ function Tdee() {
     };
 
     fetchFoodSimilars();
-  }, [value]);
+  }, [food]);
 
   function addSelect(item) {
-    setTest({
+    setSelect({
       id: item.fdcId,
       name: item.description,
       servingSizeUnit: item.servingSizeUnit || "g",
@@ -86,7 +73,7 @@ function Tdee() {
           value: n.value || 0,
         })),
     });
-    setValue(item.description);
+    setFood(item.description);
     setSimilars([]);
     setChosen(true);
   }
@@ -94,7 +81,7 @@ function Tdee() {
   function addIngredient(e) {
     e.preventDefault();
 
-    if (!value.trim()) {
+    if (!food.trim()) {
       setErrorMessage("ingredient name is missing");
       return;
     }
@@ -104,25 +91,76 @@ function Tdee() {
       return;
     }
 
-    const newIngredient = { ...test, quantity: quantity };
+    const factor = quantity / select.servingSize;
+    const newIngredient = {
+      ...select,
+      foodNutrients: select.foodNutrients.map((n) => {
+        let valueInGrams = n.value;
+        let unit = n.unitName.toLowerCase();
+
+        if (unit === "mg") {
+          valueInGrams = n.value / 1000;
+          unit = "g";
+        }
+
+        if (unit === "ug") {
+          valueInGrams = n.value / 1000000;
+          unit = "g";
+        }
+
+        const scaledValue =
+          unit === "kcal" ? n.value * factor : valueInGrams * factor;
+
+        return {
+          ...n,
+          value: +scaledValue.toFixed(2),
+          unitName: unit === "kcal" ? "kcal" : "g",
+        };
+      }),
+      quantity: quantity,
+    };
+
     setIngredients((prev) => [...prev, newIngredient]);
 
     // Clear form
-    setValue("");
-    setIngreId("");
+    setFood("");
+    ("");
     setQuantity("");
     setErrorMessage("");
     setChosen(false);
-    setTest({});
+    setSelect({});
   }
 
   function removeIngredient(id) {
     setIngredients((prev) => prev.filter((i) => id !== i.id));
   }
 
-  console.log(test);
-  console.log(ingredients);
-  
+  const resetMeal = () => {
+    setResult(false);
+    setIngredients([]);
+    setChosen(false);
+    setMealTotals(null);
+  };
+
+  useEffect(() => {
+    const totals = ingredients.reduce((totals, food) => {
+      food.foodNutrients.forEach((n) => {
+        if (!totals[n.name]) {
+          totals[n.name] = {
+            name: n.name,
+            unitName: n.unitName,
+            value: 0,
+          };
+        }
+
+        totals[n.name].value = n.value;
+      });
+
+      return totals;
+    }, {});
+
+    setMealTotals(totals);
+  }, [ingredients]);
 
   return (
     <>
@@ -201,7 +239,40 @@ function Tdee() {
           }}
         />
         {result ? (
-          <MealNutrition />
+          <div className="nut-form-wrapper results">
+            <h2 className="no-margin highlight-txt">Meal Results</h2>
+
+            <ul className="w-full vertical-center one-rem-mt">
+              <h4 className="no-margin txt-to-left w-full one-rem-mb">
+                Your meal includes:
+              </h4>
+              {Object.values(mealTotals).map((n) => (
+                <li
+                  style={{ paddingInline: "1rem" }}
+                  key={n.name}
+                  className="flex-between w-full"
+                >
+                  <span className="toCenter">
+                    {" "}
+                    <IoIosArrowForward className="icon yellow-text" />
+                    {n.name}:
+                  </span>{" "}
+                  <span>
+                    {n.value} {n.unitName}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <button onClick={resetMeal} className="primary-btn one-rem-mt">
+              Count New Meal
+            </button>
+            <p className="tiny-txt gray-txt no-margin">
+              NOTE: Data may be inaccurate.
+              <br />
+              The used API mainly provides branded food data, which can affect
+              precision.
+            </p>
+          </div>
         ) : (
           <div className="vertical-left txt-to-left nut-form-wrapper">
             <h3 className="no-margin">Calculate Your Meal Nutrition</h3>
@@ -214,10 +285,10 @@ function Tdee() {
                   className="nut-input w-full"
                   type="text"
                   placeholder="Ingredient e.g. rice, banana..."
-                  value={value}
-                  onChange={(e) => setValue(e.target.value)}
+                  value={food}
+                  onChange={(e) => setFood(e.target.value)}
                 />
-                {similars.length > 0 && value ? (
+                {similars.length > 0 && food ? (
                   loading ? (
                     <ul className="relative similars toCenter">
                       <div className="loading-circle" />
@@ -244,7 +315,9 @@ function Tdee() {
                 type="number"
                 placeholder="Quantity in grams"
                 value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))}
+                onChange={(e) =>
+                  e.target.value ? setQuantity(Number(e.target.value)) : ""
+                }
               />
               <div className="flex-between w-full one-rem-mt">
                 <button className="secondary-btn" onClick={addIngredient}>
