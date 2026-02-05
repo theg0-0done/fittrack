@@ -10,7 +10,7 @@ import { IoSaveOutline } from "react-icons/io5";
 
 import IHPcard from "../components/IHPcard";
 import Error from "../components/Error";
-import { API_KEY, NUTRIENT_MAP } from "../data/nutritionData";
+import { NUTRIENT_MAP } from "../data/nutritionData";
 
 import { useState, useEffect } from "react";
 import { FaCheck, FaTrash } from "react-icons/fa";
@@ -27,6 +27,7 @@ function Tdee() {
   const [chosen, setChosen] = useState(false);
   const [select, setSelect] = useState({});
   const [mealTotals, setMealTotals] = useState({});
+  const API_KEY = import.meta.env.VITE_API_KEY;
 
   useEffect(() => {
     const fetchFoodSimilars = async () => {
@@ -161,6 +162,8 @@ function Tdee() {
 
     setMealTotals(totals);
   }, [ingredients]);
+
+  console.log(API_KEY);
 
   return (
     <>
