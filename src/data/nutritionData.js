@@ -1,6 +1,6 @@
 export const NUTRIENT_MAP = {
-  Energy: "calories",
-  Protein: "protein",
+  "Energy": "calories",
+  "Protein": "protein",
   "Total lipid (fat)": "fat",
   "Fatty acids, total saturated": "satFat",
   "Carbohydrate, by difference": "carbs",
