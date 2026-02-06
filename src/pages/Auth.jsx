@@ -33,7 +33,7 @@ function Auth() {
       setError("Passwords must match!");
       return;
     }
-    
+
     setError("");
     setUsername("");
     setPassword("");
@@ -123,7 +123,7 @@ function Auth() {
                   />
                   <label htmlFor="username">birthday</label>
                 </div>
-                <div style={{ maxWidth: "30%" }} className="auth-input-wrapper">
+                <div className="auth-input-wrapper">
                   <input
                     name="last name"
                     type="text"

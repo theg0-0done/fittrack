@@ -6,7 +6,7 @@ import { Routes, Route } from "react-router-dom";
 import Tdee from "./pages/Tdee.jsx";
 import NutritionCalculator from "./pages/NutritionCalculator.jsx";
 import Auth from "./pages/Auth.jsx";
-import Error404 from "./pages/error404.jsx";
+import Error404 from "./pages/Error404.jsx";
 
 function App() {
   return (
