@@ -20,14 +20,16 @@ function Exercises() {
       >
         <div className="container vertical-center">
           <h1 className="no-margin">BUILD WITH PURPOSE</h1>
-          <p className="no-margin">
-            Find movements that match your strength, your equipment, and where
-            you stand right now
+          <p className="no-margin eighty-max-width">
+            Find movements that match your strength, your equipment, and more.
           </p>
         </div>
       </section>
 
-      <section className="container vertical-center">
+      <section
+        style={{ marginTop: "4rem" }}
+        className="container vertical-center"
+      >
         <p className="no-margin">Filters</p>
         <h2 className="no-margin">Narrow down your search</h2>
         <p className="no-margin">
@@ -51,34 +53,30 @@ function Exercises() {
           </div>
           <div className="squared-grid eighty-to-fourty-width">
             <div
-              className="grid-square squared-img toCenter"
+              className="grid-square squared-img"
               style={{
                 backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
               url(${dumbells})`,
               }}
             >
-              <div className="vertical-left txt-to-left">
-                <p className="small-text no-margin">Equipements</p>
-                <h4 className="no-margin">
-                  Find exercises with what available
-                </h4>
+              <div className="vertical-left txt-to-left h-full">
+                <h4 className="no-margin">Equipements</h4>
                 <p className="small-text no-margin">
-                  Dumbbells, barbells, machines, or bodyweight
+                  Find exercises available equipements.
                 </p>
               </div>
             </div>
             <div
-              className="grid-square squared-img toCenter"
+              className="grid-square squared-img"
               style={{
                 backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
               url(${musclesMom})`,
               }}
             >
-              <div className="vertical-left txt-to-left">
-                <p className="small-text no-margin">Ability</p>
-                <h4 className="no-margin">Match exercises to your ability</h4>
+              <div className="vertical-left txt-to-left h-full">
+                <h4 className=" no-margin">Ability</h4>
                 <p className="small-text no-margin">
-                  Beginner, intermediate, or advanced movements
+                  Match exercises to your workout ability
                 </p>
               </div>
             </div>
@@ -89,27 +87,23 @@ function Exercises() {
               url(${inclineGuy})`,
               }}
             >
-              <div className="vertical-left txt-to-left">
-                <p className=" no-margin small-text">Target</p>
-                <h4 className="no-margin">Target specific musclegroups</h4>
-                <p className="no-margin small-text">
-                  Beginner, intermediate, or advanced movements
+              <div className="vertical-left txt-to-left h-full">
+                <h4 className="no-margin small-text">Target</h4>
+                <p className=" small-text no-margin">
+                  Target specific musclegroups of your choice
                 </p>
               </div>
             </div>
             <div
-              className="grid-square squared-img toCenter"
+              className="grid-square squared-img"
               style={{
                 backgroundImage: `linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
               url(${weightPlates})`,
               }}
             >
-              <div className="vertical-left txt-to-left">
-                <p className="small-text no-margin">Tools</p>
-                <h4 className="no-margin">Work with what on hand</h4>
-                <p className="small-text no-margin">
-                  Dumbbells, barbells, machines, or bodyweight
-                </p>
+              <div className="vertical-left txt-to-left h-full">
+                <h4 className="no-margin">Tools</h4>
+                <p className="small-text no-margin">Work out with what You got on hand</p>
               </div>
             </div>
           </div>

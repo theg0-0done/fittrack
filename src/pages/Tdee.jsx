@@ -206,10 +206,10 @@ function NutritionCalculator() {
         <p className="no-margin">Everything needed to fuek you goal</p>
         <div className="verPhone-horPc two-rem-gap ">
           <div className="darkGray-bg height-two-width hText-hImg-card vertical-center">
-            <div className="vertical-left oneRem-gap one-rem-padding one-rem-mb ">
-              <p className="no-margin small-text gray-txt">Precise</p>
+            <div className="vertical-left oneRem-gap one-rem-padding one-rem-mb w-full">
+              <p className="no-margin gray-txt">Precise</p>
               <h3 className="no-margin">Numbers Tailored To Your Body</h3>
-              <p className="no-margin small-text">
+              <p className="no-margin">
                 No generic advice here, just your targets
               </p>
             </div>
@@ -222,10 +222,10 @@ function NutritionCalculator() {
             />
           </div>
           <div className="darkGray-bg height-two-width hText-hImg-card vertical-center">
-            <div className="vertical-left oneRem-gap one-rem-padding one-rem-mb ">
-              <p className="no-margin small-text gray-txt">Flexible</p>
+            <div className="vertical-left oneRem-gap one-rem-padding one-rem-mb w-full">
+              <p className="no-margin gray-txt">Flexible</p>
               <h3 className="no-margin">Adjust As Your Progress</h3>
-              <p className="no-margin small-text">
+              <p className="no-margin">
                 Yous needs change, so your numbers do too.
               </p>
             </div>
@@ -239,10 +239,10 @@ function NutritionCalculator() {
             />
           </div>
           <div className="darkGray-bg height-two-width hText-hImg-card vertical-center">
-            <div className="vertical-left oneRem-gap one-rem-padding one-rem-mb ">
-              <p className="no-margin small-text gray-txt">Simple</p>
+            <div className="vertical-left oneRem-gap one-rem-padding one-rem-mb w-full">
+              <p className="no-margin gray-txt">Simple</p>
               <h3 className="no-margin">Easy To Understand And Use</h3>
-              <p className="no-margin small-text">
+              <p className="no-margin">
                 Clear targets mean better decisions daily
               </p>
             </div>
@@ -340,14 +340,12 @@ function NutritionCalculator() {
             </FormContext.Provider>
             {error ? <Error key={error} message={error} /> : null}
           </div>
-          {/* <div className="form-container vertical-center container no-margin no-padding">
-          </div> */}
         </div>
       </section>
 
       <section className="container toCenter vertical-center one-rem-mt">
         <h2 className="no-margin">Start tracking today</h2>
-        <p className="no-margin">
+        <p className="no-margin eighty-max-width small-text ">
           Keep your calculations safe and monitor progress over time with a free
           account{" "}
         </p>

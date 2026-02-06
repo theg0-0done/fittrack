@@ -610,13 +610,26 @@ section {
 /* Specials Section Styles */
 .specials-card {
     text-align: left;
+    display: flex;
     justify-content: space-between;
-    height: 180px;
+    align-items: stretch;
+    min-height: 180px;
 }
 
-.specials-card img {
-    width: auto;
+.special-card-content {
+    justify-content: space-between;
+}
+
+.special-card-img-wrapper {
+    max-width: 40%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+.special-card-img-wrapper img {
+    width: 100%;
     height: 100%;
+    object-fit: cover;
 }
 
 /* testimonials styles */
@@ -736,7 +749,7 @@ section {
 .tdee-form-wrapper {
     width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(10px);
+    backdrop-filter: blur(5px);
     border: 1px var(--yellow) solid;
     padding: 0 2.2rem 2.2rem;
     gap: 2rem;

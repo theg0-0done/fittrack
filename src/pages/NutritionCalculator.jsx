@@ -163,7 +163,6 @@ function Tdee() {
     setMealTotals(totals);
   }, [ingredients]);
 
-  console.log(API_KEY);
 
   return (
     <>
@@ -190,38 +189,38 @@ function Tdee() {
           <div className="w-full flex-between-to-around two-rem-gap">
             <IHPcard
               icon={<TbListDetails />}
-              h="Enter meal details"
+              h="Meal Details"
               p="Provide meal ingredients-list and quantity."
             />
 
             <IHPcard
               icon={<LiaAppleAltSolid />}
-              h="Get instant results"
+              h="Instant Results"
               p="See your meal's calorie and macronutrient targets immediately"
             />
           </div>
           <div className="w-full flex-between-to-around two-rem-gap">
             <IHPcard
               icon={<IoSaveOutline />}
-              h="Save your data"
+              h="Save Data"
               p="Keep calculations secure in your account for future reference"
             />
 
             <IHPcard
               icon={<GiProgression />}
-              h="Track progress"
+              h="Track Progress"
               p="Monitor how your needs change as you work toward your goals"
             />
           </div>
           <div className="w-full flex-between-to-around two-rem-gap">
             <IHPcard
               icon={<TbListDetails />}
-              h="Enter your details"
+              h="Enter Details"
               p="Provide your age, weight, height, activity level, and fitness goals"
             />
             <IHPcard
               icon={<LiaAppleAltSolid />}
-              h="Get instant results"
+              h="Instant Results"
               p="See your personalized calorie and macronutrient targets immediately"
             />
           </div>
@@ -279,8 +278,8 @@ function Tdee() {
         ) : (
           <div className="vertical-left txt-to-left nut-form-wrapper">
             <h3 className="no-margin">Calculate Your Meal Nutrition</h3>
-            <p style={{ marginBottom: "2rem" }} className="no-margin">
-              Enter you meal's ingredients name and quantity
+            <p style={{ marginBottom: "2rem" }} className="no-margin gray-txt">
+              Enter your meal's ingredients name and quantity
             </p>
             <form className="nut-form vertical-left w-full">
               <div className="relative w-full">
@@ -373,14 +372,14 @@ function Tdee() {
         className="container vertical-center"
       >
         <h2 className="no-margin">Pricing</h2>
-        <p className="no-margin">
+        <p className="no-margin eighty-max-width">
           Everything you need to calculate and track nutrition
         </p>
         <div className="verPhone-horPc w-full">
           <article className="pricing-card vertical-center flex-between oneRem-gap darkGray-bg one-rem-padding eighty-to-fourty-width">
             <div className="vertical-center ">
               <h5 className="no-margin">Free Plan</h5>
-              <h3 className="no-margin yellow-text">ALWAYS</h3>
+              <h2 className="no-margin yellow-text">ALWAYS</h2>
               <p className="no-margin">No credit card required</p>
             </div>
             <ul className="vertical-left h-full w-full oneRem-gap one-rem-mt">
@@ -404,7 +403,7 @@ function Tdee() {
           <article className="pricing-card vertical-center flex-between oneRem-gap darkGray-bg one-rem-padding eighty-to-fourty-width">
             <div className="vertical-center ">
               <h5 className="no-margin">Premium plan</h5>
-              <h3 className="no-margin yellow-text">4.99$</h3>
+              <h2 className="no-margin yellow-text">4.99$</h2>
               <p className="no-margin">Per month, billed annually</p>
             </div>
             <ul className="vertical-left h-full w-full oneRem-gap one-rem-mt">
@@ -437,7 +436,7 @@ function Tdee() {
 
       <section className="container toCenter vertical-center">
         <h2 className="no-margin">Start tracking today</h2>
-        <p className="no-margin">
+        <p className="no-margin eighty-max-width">
           Keep your calculations safe and monitor progress over time with a free
           account{" "}
         </p>

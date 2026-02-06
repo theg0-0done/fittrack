@@ -3,9 +3,12 @@ import GymImg from "../assets/gym.jpg";
 import TDEE from "../assets/tdee.jpg";
 import Meal from "../assets/meal.jpg";
 import inclinePressGuy from "../assets/inclinePressGuy.jpg";
+
 import { comments } from "../data/comments";
-import ReactStars from "react-stars";
+
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import ReactStars from "react-stars";
 import { IoIosArrowForward } from "react-icons/io";
 
 function Home() {
@@ -46,38 +49,56 @@ function Home() {
           discipline. That’s progress.
         </p>
         <div className="specials-cards-wrapper verPhone-horPc strech">
-          <div className="specials-card toCenter darkGray-bg border-spin-animation">
-            <div className="one-rem-padding vertical-left oneRem-gap">
+          <div className="specials-card darkGray-bg border-spin-animation">
+            <div className="special-card-content one-rem-padding vertical-left">
               <h5 className="no-margin yellow-text">Exercises</h5>
-              <h3 className="no-margin">Find Your Movement</h3>
+              <h3 className="no-margin">Your Movement</h3>
               <p className="no-margin">
                 Browse our complete exercise library with detailed form cues
               </p>
-              <button className="secondary-btn">Explore</button>
+              <Link to="/exercises">
+                <button className="secondary-btn toCenter">
+                  Lern more <IoIosArrowForward />
+                </button>
+              </Link>
             </div>
-            <img src={GymImg} alt="Gym" />
+            <div className="special-card-img-wrapper">
+              <img src={GymImg} alt="Gym" />
+            </div>
           </div>
-          <div className="specials-card toCenter darkGray-bg border-spin-animation">
-            <div className="one-rem-padding vertical-left oneRem-gap">
+          <div className="specials-card darkGray-bg border-spin-animation">
+            <div className="special-card-content one-rem-padding vertical-left">
               <h5 className="no-margin yellow-text">TDEE</h5>
-              <h3 className="no-margin">Calculate You Needs</h3>
+              <h3 className="no-margin">Calculate Needs</h3>
               <p className="no-margin">
-                Get precise calorie and macro targets based on your goals{" "}
+                Get precise calorie and macro targets based on your goals
               </p>
-              <button className="secondary-btn">Calculate</button>
+              <Link to="/tdee">
+                <button className="secondary-btn toCenter">
+                  Calculate <IoIosArrowForward />
+                </button>
+              </Link>
             </div>
-            <img src={TDEE} alt="TDEE" />
+            <div className="special-card-img-wrapper">
+              <img src={TDEE} alt="Gym" />
+            </div>
           </div>
-          <div className="specials-card toCenter darkGray-bg border-spin-animation">
-            <div className="one-rem-padding vertical-left oneRem-gap">
+          <div className="specials-card darkGray-bg border-spin-animation">
+            <div className="special-card-content one-rem-padding vertical-left">
               <h5 className="no-margin yellow-text">Nutrition</h5>
               <h3 className="no-margin">Meal Macros</h3>
               <p className="no-margin">
                 Calculate the macros for any meal or recipe in seconds
               </p>
-              <button className="secondary-btn">Explore</button>
+              <Link to="/nutrition-calculator">
+                <button className="secondary-btn toCenter">
+                  Explore <IoIosArrowForward />
+                </button>
+              </Link>
             </div>
-            <img src={Meal} alt="meal" />
+            <div className="special-card-img-wrapper">
+              <img src={Meal} alt="Gym" />
+            </div>
           </div>
         </div>
       </section>
@@ -194,7 +215,9 @@ function Home() {
               type="text"
               placeholder="Enter e-mail adress"
             />
-            <button className="primary-btn">Subscribe</button>
+            <Link to='/auth/register'>
+              <button className="primary-btn">Subscribe</button>
+            </Link>
           </form>
           <p className="tiny-txt gray-txt">
             We respect your privacy. Unsubscribe anytime from any email.
